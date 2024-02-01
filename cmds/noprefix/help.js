@@ -1,4 +1,4 @@
-module.exports = async ({ api, event }) => {
+module.exports = async ({ api, event , config }) => {
     const { prefix } = config;
     const fs = require("fs");
     const path = require("path");
