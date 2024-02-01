@@ -7,7 +7,7 @@ module.exports = async ({ api, event }) => {
       const addedParticipants = event.logMessageData.addedParticipants;
       addedParticipants.forEach(async (participant) => {
         const joinMemberID = participant.userFbId;
-        const joinMemberInfo = await api.getUserInfoMain(joinMemberID);
+        const joinMemberInfo = await api.getUserInfo(joinMemberID);
         const joinMemberfullName = joinMemberInfo[joinMemberID].name;
         const welcome = [`Wassup,`, `Welcome,`, "Supp,", "Wazzup,"];
         const randomIndex = Math.floor(Math.random() * welcome.length);
