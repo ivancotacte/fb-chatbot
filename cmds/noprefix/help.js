@@ -22,7 +22,7 @@ module.exports = async ({ api, event , config }) => {
         }
       }
   
-      let commandsArray = await readFilesInDirectory("./noprefix");
+      let commandsArray = await readFilesInDirectory("./cmds/noprefix");
   
       let input = event.body;
       let data = input.split(" ");
