@@ -13,7 +13,7 @@ module.exports = async ({ api, event }) => {
         const { gpt } = require("gpti");
         const axios = require("axios");
         const fs = require("fs");
-        const audio = __dirname + "./cache/audio.mp3";
+        const audio = __dirname + "/audio.mp3";
         let message = data.join(" ");
         let userInfo = await api.getUserInfo(event.senderID);
         userInfo = userInfo[event.senderID];
@@ -30,12 +30,14 @@ module.exports = async ({ api, event }) => {
           markdown: false
         }, async (err, data) => {
                 if (CHIKA.includes("say")) {
-                    api.sendMessage("TEST say!! " + message, event.threadID, event.messageID);
                     const vm = (await axios.get(`https://translate.google.com/translate_tts?ie=UTF-8&q=${message}&tl=tl&client=tw-ob`, {
                     responseType: "arraybuffer"
                     })).data
                       fs.writeFileSync(audio, Buffer.from(vm, "utf-8"));
-                        return api.sendMessage({attachment: fs.createReadStream(audio)}, event.threadID, event.messageID)
+                        return api.sendMessage({
+                            body: "TEST say!! " + message,
+                            attachment: fs.createReadStream(audio)
+                        }, event.threadID, event.messageID)
                 } else if (err != null){
                     console.log(err);
                     api.setMessageReaction("❌", event.messageID, () => { }, true);
