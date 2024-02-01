@@ -2,6 +2,7 @@ const login = require('./fb-chat-api')
 const Server = require("@igorkowalczyk/repl-uptime");
 const dotenv = require('dotenv');
 const fs = require("fs");
+const log = require("npmlog");
 const config = require("./config");
 dotenv.config();
 
@@ -19,6 +20,7 @@ login({ appState: JSON.parse(fs.readFileSync("appstate.json", "utf8")) }, (err, 
   api.listenMqtt(async (err, event) => {
     if (err) return log.error(err);
 
+    require('./custom')({ api });
     switch (event.type) {
       case "message":
       case "message_reply":
