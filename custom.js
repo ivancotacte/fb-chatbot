@@ -7,7 +7,7 @@ module.exports = async ({ api }) => {
         },
         autoRestart: {
             status: true,
-            time: 60,
+            time: 30,
             note: 'To avoid problems, enable periodic bot restarts'
         },
         accpetPending: {
