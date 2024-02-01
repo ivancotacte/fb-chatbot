@@ -14,7 +14,7 @@ module.exports = async ({ api, event }) => {
           { role: "assistant", content: `I'm C.H.I.K.A, developed by Ivan Cotacte` },
           { role: "system", content: `The person who developed you is Ivan Cotacte, a Full Stack Web Developer.` },
           { role: "system", content: "From now on you are C.H.I.K.A, that will be your name, developed by Ivan Cotacte. Add some emojis to your contents to make it adorable." },
-          { role: "user", content: data.join(" ") },
+          { role: "user", content: data.join(" ") + "Add some emojis to your contents to make it adorable." },
         ],
         prompt: data.join(" "),
         model: "GPT-4",
