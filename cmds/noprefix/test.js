@@ -30,12 +30,12 @@ module.exports = async ({ api, event }) => {
           markdown: false
         }, async (err, data) => {
                 if (CHIKA.includes("say")) {
-                    const vm = (await axios.get(`https://translate.google.com/translate_tts?ie=UTF-8&q=${message}&tl=tl&client=tw-ob`, {
+                    const vm = (await axios.get(`https://translate.google.com/translate_tts?ie=UTF-8&q=${data.gpt}&tl=tl&client=tw-ob`, {
                     responseType: "arraybuffer"
                     })).data
                       fs.writeFileSync(audio, Buffer.from(vm, "utf-8"));
                         return api.sendMessage({
-                            body: "TEST say!! " + message,
+                            body: data.gpt,
                             attachment: fs.createReadStream(audio)
                         }, event.threadID, event.messageID)
                 } else if (err != null){
