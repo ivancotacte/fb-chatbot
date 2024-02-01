@@ -33,7 +33,7 @@ module.exports = async ({ api, event, config }) => {
       } catch (err) {
         if (err.code == "MODULE_NOT_FOUND") {
           api.sendMessage(
-            `The command '${cmd[0]}' is not recognized.`,
+            `The command '${cmd[0]}' is not found! Use ${prefix}help to see all commands.`,
             event.threadID,
             event.messageID,
           );

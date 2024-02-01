@@ -29,6 +29,21 @@ module.exports = async ({ api, event }) => {
         });
       });
     } else if (event.logMessageType == "log:unsubscribe") {
+      const leftParticipants = event.logMessageData.leftParticipants;
+      leftParticipants.forEach(async (participant) => {
+        const leftMemberID = participant.userFbId;
+        const leftMemberInfo = await api.getUserInfo(leftMemberID);
+        const leftMemberfullName = leftMemberInfo[leftMemberID].name;
+        const bye = [`Bye,`, `Cya,`, "Goodbye,", "See ya,"];
+        const randomIndex = Math.floor(Math.random() * bye.length);
+        const byeMessage = bye[randomIndex];
+            api.sendMessage(
+              {
+                body: `${byeMessage} @${leftMemberfullName}`,
+              },
+              event.threadID,
+            );
+      });
     } else if (event.logMessageType == "log:link-status") {
       api.sendMessage(event.logMessageBody, event.threadID);
     } else if (event.logMessageType == "log:thread-approval-mode") {

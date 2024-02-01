@@ -1,4 +1,4 @@
-module.exports = async ({ api, event }) => {
+module.exports.runFunction = async ({ api, event }) => {
     const fs = require("fs");
     const path = require("path");
     try {
@@ -73,4 +73,4 @@ module.exports = async ({ api, event }) => {
     } catch (err) {
       api.sendMessage(err, event.messageID, event.threadID);
     }
-}
+};
