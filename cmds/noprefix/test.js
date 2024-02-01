@@ -10,6 +10,7 @@ module.exports = async ({ api, event }) => {
       try {
         api.setMessageReaction("⏳", event.messageID, () => { }, true);
         const { gpt } = require("gpti");
+        let message = data.join(" ");
         let userInfo = await api.getUserInfo(event.senderID);
         userInfo = userInfo[event.senderID];
         gpt({
@@ -25,7 +26,7 @@ module.exports = async ({ api, event }) => {
           markdown: false
         }, (err, data) => {
                 if (input.includes("say")) {
-                    api.sendMessage("TEST say!!" + data.join(" "), event.threadID, event.messageID);
+                    api.sendMessage("TEST say!!" + message, event.threadID, event.messageID);
                 } else if (err != null){
                     console.log(err);
                     api.setMessageReaction("❌", event.messageID, () => { }, true);
