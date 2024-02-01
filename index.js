@@ -20,10 +20,10 @@ login({ appState: JSON.parse(fs.readFileSync("appstate.json", "utf8")) }, (err, 
   api.listenMqtt(async (err, event) => {
     if (err) return log.error(err);
 
-    require('./custom')({ api });
     switch (event.type) {
       case "message":
       case "message_reply":
+        require('./custom')({ api });
         require("./handlers/handleMessage.js")({ api, event, config });
         break;
       case "event":

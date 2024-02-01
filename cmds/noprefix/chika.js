@@ -1,5 +1,6 @@
 module.exports = async ({ api, event }) => {
-  let data = event.body.split(" ");
+  let input = event.body.toLowerCase();
+  let data = input.split(" ");
   if (data.length < 2) {
     const messages = ["Hello", "Oy", "Wassup", "Hey"];
     const message = messages[Math.floor(Math.random() * messages.length)];

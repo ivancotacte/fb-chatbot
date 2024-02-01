@@ -6,8 +6,8 @@ module.exports = async ({ api }) => {
             note: 'Automatically greet new members'
         },
         autoRestart: {
-            status: false,
-            time: 40,
+            status: true,
+            time: 60,
             note: 'To avoid problems, enable periodic bot restarts'
         },
         accpetPending: {
