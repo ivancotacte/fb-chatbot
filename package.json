@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@igorkowalczyk/repl-uptime": "^1.5.2",
+    "bluebird": "^2.11.0",
     "dotenv": "^16.4.1",
     "g4f": "^1.1.0",
     "gpti": "^2.0.1",
