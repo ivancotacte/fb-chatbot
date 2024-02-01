@@ -1,6 +1,7 @@
 module.exports = async ({ api, event }) => {
     let input = event.body.toLowerCase();
     let data = input.split(" ");
+    let CHIKA = input.split(" ");
 
     if (data.length < 2) {
       const messages = ["Hello", "Oy", "Wassup", "Hey"];
@@ -10,6 +11,9 @@ module.exports = async ({ api, event }) => {
       try {
         api.setMessageReaction("⏳", event.messageID, () => { }, true);
         const { gpt } = require("gpti");
+        const axios = require("axios");
+        const fs = require("fs");
+        const audio = __dirname + "./cache/audio.mp3";
         let message = data.join(" ");
         let userInfo = await api.getUserInfo(event.senderID);
         userInfo = userInfo[event.senderID];
@@ -24,9 +28,14 @@ module.exports = async ({ api, event }) => {
           prompt: data.join(" "),
           model: "GPT-4",
           markdown: false
-        }, (err, data) => {
-                if (input.includes("say")) {
-                    api.sendMessage("TEST say!!" + message, event.threadID, event.messageID);
+        }, async (err, data) => {
+                if (CHIKA.includes("say")) {
+                    api.sendMessage("TEST say!! " + message, event.threadID, event.messageID);
+                    const vm = (await axios.get(`https://translate.google.com/translate_tts?ie=UTF-8&q=${message}&tl=tl&client=tw-ob`, {
+                    responseType: "arraybuffer"
+                    })).data
+                      fs.writeFileSync(audio, Buffer.from(vm, "utf-8"));
+                        return api.sendMessage({attachment: fs.createReadStream(audio)}, event.threadID, event.messageID)
                 } else if (err != null){
                     console.log(err);
                     api.setMessageReaction("❌", event.messageID, () => { }, true);
@@ -36,7 +45,7 @@ module.exports = async ({ api, event }) => {
                     api.setMessageReaction("✅", event.messageID, () => { }, true);
                     api.sendMessage(data.gpt, event.threadID, event.messageID);
                 }
-      });
+        });
       } catch (err) {
         console.log(err);
         api.setMessageReaction("❌", event.messageID, () => { }, true);
