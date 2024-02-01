@@ -28,6 +28,7 @@ login({ appState: JSON.parse(fs.readFileSync("appstate.json", "utf8")) }, (err, 
         break;
       case "event":
         console.log(event);
+        require("./handlers/handleEvents.js")({ api, event });
         break;
     }
   });
