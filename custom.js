@@ -37,12 +37,12 @@ module.exports = async ({ api }) => {
         }, config.time * 60 * 1000)
       }
     }
-    function accpetGreet(config) {
+    function autoGreet(config) {
         if(config.status) {
 
         }
     }
-    accpetGreet(configCustom.accpetGreet)
+    autoGreet(configCustom.autoGreet)
     autoRestart(configCustom.autoRestart)
     accpetPending(configCustom.accpetPending)
   };  
