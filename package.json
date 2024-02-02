@@ -25,6 +25,7 @@
     "npmlog": "^7.0.1",
     "request": "^2.88.2",
     "websocket-stream": "^5.5.2",
-    "ws": "^8.13.0"
+    "ws": "^8.13.0",
+    "youtubei.js": "^9.0.2"
   }
 }
