@@ -9,6 +9,7 @@ module.exports = async ({ api, event }) => {
       api.sendMessage(message, event.threadID, event.messageID);
     } else {
       try {
+        data.shift();
         api.setMessageReaction("⏳", event.messageID, () => { }, true);
         const { gpt } = require("gpti");
         const axios = require("axios");
@@ -29,15 +30,78 @@ module.exports = async ({ api, event }) => {
           model: "GPT-4",
           markdown: false
         }, async (err, data) => {
+          let respond = data.gpt;
                 if (CHIKA.includes("say")) {
-                    const vm = (await axios.get(`https://translate.google.com/translate_tts?ie=UTF-8&q=${data.gpt}&tl=tl&client=tw-ob`, {
-                    responseType: "arraybuffer"
+                    const vm = (await axios.get(`https://translate.google.com/translate_tts?ie=UTF-8&q=${respond}&tl=tl&client=tw-ob`, {
+                      responseType: "arraybuffer"
                     })).data
                       fs.writeFileSync(audio, Buffer.from(vm, "utf-8"));
                         return api.sendMessage({
-                            body: data.gpt,
                             attachment: fs.createReadStream(audio)
                         }, event.threadID, event.messageID)
+                } else if (CHIKA.includes("music") || CHIKA.includes("audio")) {
+                  const yt = await Innertube.create({
+                    cache: new UniversalCache(false),
+                    generate_session_locally: true,
+                  });
+                  const search = await yt.music.search(respond, { type: "video" });
+                  if (search.results[0] === undefined) {
+                    api.sendMessage("music not found!", event.threadID, event.messageID);
+                  } else {
+                    api.setMessageReaction("⌛️", event.messageID, (err) => {}, true);
+                    api.sendMessage(
+                      `🔍 Searching for the music ${respond}.`,
+                      event.threadID,
+                      event.messageID,
+                    );
+                  }
+                  const info = await yt.getBasicInfo(search.results[0].id);
+                  const url = info.streaming_data?.formats[0].decipher(yt.session.player);
+                  const stream = await yt.download(search.results[0].id, {
+                    type: "audio", // audio, video or video+audio
+                    quality: "best", // best, bestefficiency, 144p, 240p, 480p, 720p and so on.
+                    format: "mp4", // media container format
+                  });
+                  const file = fs.createWriteStream(__dirname + `/../cache/audio.mp3`);
+              
+                  async function writeToStream(stream) {
+                    for await (const chunk of Utils.streamToIterable(stream)) {
+                      await new Promise((resolve, reject) => {
+                        file.write(chunk, (error) => {
+                          if (error) {
+                            reject(error);
+                          } else {
+                            resolve();
+                          }
+                        });
+                      });
+                    }
+              
+                    return new Promise((resolve, reject) => {
+                      file.end((error) => {
+                        if (error) {
+                          reject(error);
+                        } else {
+                          resolve();
+                        }
+                      });
+                    });
+                  }
+              
+                  async function main() {
+                    await writeToStream(stream);
+                    api.setMessageReaction("✅", event.messageID, (err) => {}, true);
+                    api.sendMessage(
+                      {
+                        body: `${info.basic_info["title"]}`,
+                        attachment: fs.createReadStream(__dirname + "/../cache/audio.mp3"),
+                      },
+                      event.threadID,
+                      event.messageID,
+                    );
+                  }
+              
+                  main();
                 } else if (err != null){
                     console.log(err);
                     api.setMessageReaction("❌", event.messageID, () => { }, true);
