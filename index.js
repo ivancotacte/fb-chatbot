@@ -8,6 +8,7 @@ dotenv.config();
 
 login({ appState: JSON.parse(fs.readFileSync("appstate.json", "utf8")) }, (err, api) => {
   if (err) return console.error(err);
+  require("./custom.js")({ api });
   api.setOptions({
     logLevel: "silent",
     forceLogin: true,
@@ -19,11 +20,9 @@ login({ appState: JSON.parse(fs.readFileSync("appstate.json", "utf8")) }, (err, 
 
   api.listenMqtt(async (err, event) => {
     if (err) return log.error(err);
-
     switch (event.type) {
       case "message":
       case "message_reply":
-        require('./custom')({ api });
         require("./handlers/handleMessage.js")({ api, event, config });
         break;
       case "event":

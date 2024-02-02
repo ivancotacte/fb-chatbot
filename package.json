@@ -12,7 +12,8 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.0.3",
+    "prettier": "3.2.4"
   },
   "dependencies": {
     "@igorkowalczyk/repl-uptime": "^1.5.2",
@@ -22,10 +23,11 @@
     "gpti": "^2.0.1",
     "https-proxy-agent": "^5.0.0",
     "mqtt": "^4.3.7",
+    "node-cron": "^3.0.3",
     "npmlog": "^7.0.1",
     "request": "^2.88.2",
     "websocket-stream": "^5.5.2",
     "ws": "^8.13.0",
-    "youtubei.js": "^9.0.2"
+    "youtubei.js": "^6.4.1"
   }
 }

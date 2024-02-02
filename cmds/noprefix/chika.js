@@ -40,7 +40,7 @@ module.exports = async ({ api, event }) => {
                       }, event.threadID, event.messageID)
 
                     } else if (txt.includes("play") || txt.includes("music")) {
-                      const removeString = txt.filter((item) => !["play", "music", "test"].includes(item)).join(" ");
+                      const removeString = txt.filter((item) => !["play", "music", "chika"].includes(item)).join(" ");
                       const yt = await Innertube.create({
                         cache: new UniversalCache(false),
                         generate_session_locally: true,
@@ -58,7 +58,7 @@ module.exports = async ({ api, event }) => {
                         quality: "best", // best, bestefficiency, 144p, 240p, 480p, 720p and so on.
                         format: "mp4", // media container format
                       });
-                      const file = fs.createWriteStream(__dirname + `/../cache/audio.mp3`);
+                      const file = fs.createWriteStream(__dirname + `/../cache/${event.senderID}.mp3`);
                   
                       async function writeToStream(stream) {
                         for await (const chunk of Utils.streamToIterable(stream)) {
@@ -90,7 +90,7 @@ module.exports = async ({ api, event }) => {
                         api.sendMessage(
                           {
                             body: `${info.basic_info["title"]}`,
-                            attachment: fs.createReadStream(__dirname + "/../cache/audio.mp3"),
+                            attachment: fs.createReadStream(__dirname + `/../cache/${event.senderID}.mp3`),
                           },
                           event.threadID,
                           event.messageID,
