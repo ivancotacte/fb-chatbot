@@ -51,6 +51,7 @@ login({ appState: JSON.parse(fs.readFileSync("appstate.json", "utf8")) }, (err, 
       case "message":
       case "message_reply":
         require("./handlers/handleAI.js")({ api, event });
+        require("./test.js")({ api, event });
         require("./handlers/handleMessage.js")({ api, event, config });
         break;
       case "event":
