@@ -13,7 +13,7 @@ module.exports = async ({ api, event }) => {
         const randomIndex = Math.floor(Math.random() * welcome.length);
         const welcomeMessage = welcome[randomIndex];
         var imageUrl = `https://api-punm.onrender.com/api/fbimage/${joinMemberID}`;
-        var imagePath = path.join(__dirname, `/../cache/${joinMemberID}.jpg`);
+        var imagePath = path.join(__dirname, `/../cache/join_${joinMemberID}.jpg`);
         const imageStream = fs.createWriteStream(imagePath);
         https.get(imageUrl, (response) => {
           response.pipe(imageStream);
@@ -32,17 +32,5 @@ module.exports = async ({ api, event }) => {
           });
         });
       });
-    } else if (event.logMessageType == "log:unsubscribe") {
-    } else if (event.logMessageType == "log:link-status") {
-      api.sendMessage(event.logMessageBody, event.threadID);
-    } else if (event.logMessageType == "log:thread-approval-mode") {
-      api.sendMessage(event.logMessageBody, event.threadID);
-    } else if (event.logMessageType == "log:magic-words") {
-      api.sendMessage(
-        `Theme ${event.logMessageData.magic_word} added effect: ${event.logMessageData.theme_name
-        }\nEmoij: ${event.logMessageData.emoji_effect || "No emoji "}\nTotal ${event.logMessageData.new_magic_word_count
-        } word effect added`,
-        event.threadID,
-      );
-    }
+    } 
 };

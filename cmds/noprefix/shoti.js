@@ -17,14 +17,14 @@ module.exports = async ({ api, event }) => {
         );
         return;
       }
-      var file = fs.createWriteStream(__dirname + "/../cache/shoti.mp4");
+      var file = fs.createWriteStream(__dirname + `/../../cache/shoti_${event.senderID}.mp4`);
       var rqs = request(encodeURI(response.data.data.url));
       rqs.pipe(file);
       file.on("finish", () => {
         return api.sendMessage(
           {
             body: `Username: ${response.data.data.user.username}\nNickname: ${response.data.data.user.nickname}\nID: ${response.data.data.user.userID}`,
-            attachment: fs.createReadStream(__dirname + "/../cache/shoti.mp4"),
+            attachment: fs.createReadStream(__dirname + `/../../cache/shoti_${event.senderID}.mp4`),
           },
           event.threadID,
           event.messageID,
