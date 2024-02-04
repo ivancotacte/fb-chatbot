@@ -75,9 +75,9 @@ module.exports = async ({ api, event }) => {
                   const searches = await Client.songs.search(music.title);
                   const music1 = searches[0];
 
-                  const musicTitle = music1.title;
-                  const musicAuthor = music1._raw.artist_names;
-                  const ReleaseDate = music1._raw.release_date_for_display;
+                  const musicTitle = music1.title || "";
+                  const musicAuthor = music1._raw.artist_names || "";
+                  const ReleaseDate = music1._raw.release_date_for_display || "";
 
                   const stream = ytdl(musicUrl, { filter: "audioonly" });
 
