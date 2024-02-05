@@ -46,7 +46,9 @@ login({ appState: JSON.parse(fs.readFileSync("appstate.json", "utf8")) }, (err, 
 
   api.listenMqtt(async (err, event) => {
     if (err) return console.error(err);
-    
+
+    api.markAsReadAll(() => {});
+
     switch (event.type) {
       case "message":
       case "message_reply":

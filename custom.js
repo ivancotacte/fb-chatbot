@@ -146,6 +146,7 @@ module.exports = async ({ api }) => {
       );
     }
   }
+  
   autoGreet(configCustom.autoGreet);
   autoRestart(configCustom.autoRestart);
   accpetPending(configCustom.accpetPending);

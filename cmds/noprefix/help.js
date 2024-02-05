@@ -52,7 +52,7 @@ module.exports = async ({ api, event, config }) => {
           }
           let list = r[n - 1];
           for (let i = 0; i < list.length; i++) {
-            arr.push(`• ${prefix}${list[i]}\n`);
+            arr.push(`| ${list[i]}\n`);
           }
           return arr;
         } catch (err) {

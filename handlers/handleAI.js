@@ -4,9 +4,10 @@ module.exports = async ({ api, event }) => {
   const { scrapeAndSaveData } = require("./handleGoSerh.js");
 
   const input = event.body.toLowerCase();
+  const input1 = event.body.toLowerCase().slice(1);
   const data = input.split(" ");
 
-  if (input.startsWith("chika")) {
+  if (input.startsWith("chika") || input1.startsWith("chika")) {
     if (data.length < 2) {
       const messages = ["Hello", "Oy", "Wassup", "Hey"];
       const message = messages[Math.floor(Math.random() * messages.length)];
@@ -158,7 +159,6 @@ module.exports = async ({ api, event }) => {
               api.setMessageReaction("❌", event.messageID, () => {}, true);
               api.sendMessage("Error:", event.threadID, event.messageID);
             } else {
-              console.log(respond);
               api.setMessageReaction("✅", event.messageID, () => {}, true);
               api.sendMessage(respond.gpt, event.threadID, event.messageID);
             }
