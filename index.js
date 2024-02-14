@@ -7,7 +7,9 @@ Listen(async (api, event) => {
   userInfo = userInfo[event.senderID];
 
   if (event.type == "message") {
+    require("./handlers/handleAI.js")({ api, event });
   } else if (event.type == "message_reply") {
+    require("./handlers/handleAI.js")({ api, event });
   } else if (event.type == "event") {}
 
   const autoLeave = require("./events/AutoLeave.js");
