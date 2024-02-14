@@ -1,6 +1,8 @@
 const login = require("./includes/fb-chat-api");
 const fs = require("fs");
 const Server = require("@igorkowalczyk/repl-uptime");
+require('dotenv').config();
+
 
 async function Listen(cb) {
   login(

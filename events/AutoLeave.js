@@ -1,13 +1,13 @@
+const config = require('../config.js');
+
 function autoLeaveGroup(api, event) {
     switch (event.logMessageType) {
       case "log:subscribe":
-        if (
-            event.threadID === "5288809864553180"
-          )
+        if (config.ApproveGroupIDS.includes(event.threadID))
             return;
     
           const message = {
-            body: "Hello everyone!",
+            body: "Hello everyone! \n\nGroupID: " + event.threadID,
           };
     
           api.sendMessage(message, event.threadID, () => {
